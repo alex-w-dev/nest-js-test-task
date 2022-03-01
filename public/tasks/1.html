@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=windows-1251"/>
+	<title></title>
+	<meta name="generator" content="LibreOffice 7.0.5.2 (Windows)"/>
+	<meta name="author" content="user"/>
+	<meta name="created" content="2021-09-20T10:22:00"/>
+	<meta name="changed" content="2022-03-01T22:12:00.219000000"/>
+	<meta name="AppVersion" content="16.0000"/>
+	<style type="text/css">
+		@page { size: 21cm 29.7cm; margin-left: 3cm; margin-right: 1.5cm; margin-top: 2cm; margin-bottom: 2cm }
+		p { margin-bottom: 0.25cm; direction: ltr; line-height: 115%; text-align: left; orphans: 2; widows: 2; background: transparent }
+		a:link { color: #0563c1; text-decoration: underline }
+	</style>
+</head>
+<body lang="ru-RU" link="#0563c1" vlink="#800000" dir="ltr"><p align="center" style="margin-bottom: 0.28cm; line-height: 108%">
+<font size="4" style="font-size: 14pt"><span lang="en-US"><b>Node.js
+Fullstack Developer test</b></span></font></p>
+<p style="margin-bottom: 0.28cm; line-height: 108%"><span lang="en-US">Create
+a service that collect data from cryptocompare.com using its API and
+stores it in a database (MySQL/PostgreSQL/Mongo)</span></p>
+<p style="margin-bottom: 0.28cm; line-height: 108%"><span lang="en-US">Example
+API request: GET
+</span><font color="#0563c1"><u><a href="https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC&amp;tsyms=USD,EUR"><span lang="en-US">https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC&amp;tsyms=USD,EUR</span></a></u></font></p>
+<p lang="en-US" style="margin-bottom: 0.28cm; line-height: 108%"><br/>
+<br/>
+
+</p>
+<p style="margin-bottom: 0.28cm; line-height: 108%"><span lang="en-US"><u><b>REQUIREMENTS:</b></u></span></p>
+<p style="margin-bottom: 0.28cm; line-height: 108%"><span lang="en-US">1.
+Currency pairs must be configurable.</span></p>
+<p style="margin-bottom: 0.28cm; line-height: 108%"><span lang="en-US">2.
+Database parameters must be configurable.</span></p>
+<p style="margin-bottom: 0.28cm; line-height: 108%"><span lang="en-US">3.
+Service must store data in database by a scheduler.</span></p>
+<p style="margin-bottom: 0.28cm; line-height: 108%"><span lang="en-US">4.
+If cryptocompare's api is not accessible service must serve data from
+its database.</span></p>
+<p style="margin-bottom: 0.28cm; line-height: 108%"><span lang="en-US">5.
+API should accept as many fsyms/tsyms in one request as possible
+(ex.: GET service/price?fsyms=BTC,LINK,MKR&amp;tsyms=USD,EUR,ETH,LTC
+should return all pair prices)</span></p>
+<p style="margin-bottom: 0.28cm; line-height: 108%"><span lang="en-US">6.
+Data in response must be fresh (realtime). 2-3 minutes discrepancy is
+ok.</span></p>
+<p lang="en-US" style="margin-bottom: 0.28cm; line-height: 108%"><br/>
+<br/>
+
+</p>
+<p style="margin-bottom: 0.28cm; line-height: 108%"><span lang="en-US"><u><b>ADDITIONAL
+POINTS:</b></u></span></p>
+<p style="margin-bottom: 0.28cm; line-height: 108%"><span lang="en-US">1.
+Service scalabillity is a plus.</span></p>
+<p style="margin-bottom: 0.28cm; line-height: 108%"><span lang="en-US">2.
+Following standard go project layout is a plus.</span></p>
+<p style="margin-bottom: 0.28cm; line-height: 108%"><span lang="en-US">3.
+Websocket API for the service is a plus.</span></p>
+<p style="margin-bottom: 0.28cm; line-height: 108%"><span lang="en-US">4.
+Using docker to build and run the service is a plus.</span></p>
+<p style="margin-bottom: 0.28cm; line-height: 108%"><span lang="en-US">5.
+Nicely written README with clear instructions is a plus</span></p>
+</body>
+</html>
