@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { CryptocompareModule } from './cryptocompare/cryptocompare.module';
 
 @Module({
-  imports: [],
+  imports: [CryptocompareModule],
   controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
