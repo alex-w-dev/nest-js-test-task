@@ -1,23 +1,25 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { CryptocompareService } from './cryptocompare.service';
-import { CryptocomparePriceResponseDto } from './dto/cryptocompare-price-response.dto';
+import { CurrencyService } from './currency.service';
+import { CurrencyPriceResponseDto } from './dto/currency-price-response.dto';
 import { ICurrencyPair } from '../common/interfaces';
+import { CurrencyAvailablePairsResponseDto } from './dto/currency-available-pairs-response.dto';
 
-@ApiTags('cryptocompare')
-@Controller('cryptocompare')
-export class CryptocompareController {
-  constructor(private cryptocompareService: CryptocompareService) {}
+@ApiTags('currency')
+@Controller('currency')
+export class CurrencyController {
+  constructor(private cryptocompareService: CurrencyService) {}
 
-  @Get('currency-pairs')
+  @Get('available-pairs')
   @ApiOperation({ summary: 'All available currency pairs' })
   @ApiResponse({
-    type: [String],
-    description:
-      'List of available currency pairs. Notice: BTC-EUR means, that is can be EUR-BTC too',
+    type: CurrencyAvailablePairsResponseDto,
+    description: 'List of available currency pairs.',
   })
-  currencyPairs() {
-    return this.cryptocompareService.getAllAvailableCurrencyPairs();
+  currencyPairs(): CurrencyAvailablePairsResponseDto {
+    return {
+      currencyPairs: this.cryptocompareService.getAllAvailableCurrencyPairs(),
+    };
   }
 
   @Get('prices')
@@ -37,13 +39,13 @@ export class CryptocompareController {
     example: 'EUR,RUB',
   })
   @ApiResponse({
-    type: CryptocomparePriceResponseDto,
+    type: CurrencyPriceResponseDto,
     description: 'All data is fresh',
   })
   async prices(
     @Query('fsyms') fsyms: string | string[],
     @Query('tsyms') tsyms: string | string[],
-  ): Promise<CryptocomparePriceResponseDto> {
+  ): Promise<CurrencyPriceResponseDto> {
     if (typeof fsyms === 'string') fsyms.split(',');
     if (typeof tsyms === 'string') tsyms.split(',');
 

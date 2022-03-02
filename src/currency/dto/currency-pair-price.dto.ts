@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { CryptocomparePriceRawDto } from './cryptocompare-price-raw.dto';
-import { CryptocomparePriceDisplayDto } from './cryptocompare-price-display.dto';
 import { ICurrencyPair } from '../../common/interfaces';
+import { CryptocomparePriceDisplayDto } from '../../cryptocompare/dto/cryptocompare-price-display.dto';
+import { CryptocomparePriceRawDto } from '../../cryptocompare/dto/cryptocompare-price-raw.dto';
 
-export class CryptocompareCurrencyPairPriceDto {
+export class CurrencyPairPriceDto {
   @ApiProperty({
     type: String,
   })
