@@ -22,16 +22,22 @@
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
+    "@nestjs/config": "^1.2.0",
     "@nestjs/core": "^8.0.0",
     "@nestjs/event-emitter": "^1.1.0",
+    "@nestjs/mongoose": "^9.0.2",
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/swagger": "^5.2.0",
+    "axios": "^0.26.0",
     "cryptocompare": "^1.0.0",
+    "got": "^12.0.1",
     "hbs": "^4.2.0",
+    "mongoose": "^6.2.4",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
-    "swagger-ui-express": "^4.3.0"
+    "swagger-ui-express": "^4.3.0",
+    "websocket": "^1.0.34"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",
@@ -41,6 +47,7 @@
     "@types/jest": "27.4.1",
     "@types/node": "^16.0.0",
     "@types/supertest": "^2.0.11",
+    "@types/websocket": "^1.0.5",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "eslint": "^8.0.1",

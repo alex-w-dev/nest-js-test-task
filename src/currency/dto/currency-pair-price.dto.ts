@@ -2,20 +2,28 @@ import { ApiProperty } from '@nestjs/swagger';
 import { ICurrencyPair } from '../../common/interfaces';
 import { CryptocomparePriceDisplayDto } from '../../cryptocompare/dto/cryptocompare-price-display.dto';
 import { CryptocomparePriceRawDto } from '../../cryptocompare/dto/cryptocompare-price-raw.dto';
+import { CurrencyCode } from '../../common/enums/currency-code.enum';
 
 export class CurrencyPairPriceDto {
   @ApiProperty({
-    type: String,
+    type: 'enum',
+    enum: CurrencyCode,
   })
-  currencyPair: ICurrencyPair;
+  tsym: ICurrencyPair;
+
+  @ApiProperty({
+    type: 'enum',
+    enum: CurrencyCode,
+  })
+  fsym: ICurrencyPair;
 
   @ApiProperty({
     type: CryptocomparePriceRawDto,
   })
-  cryptocomparePriceRaw: CryptocomparePriceRawDto;
+  raw: CryptocomparePriceRawDto;
 
   @ApiProperty({
     type: CryptocomparePriceDisplayDto,
   })
-  cryptocomparePriceDisplay: CryptocomparePriceDisplayDto;
+  display: CryptocomparePriceDisplayDto;
 }

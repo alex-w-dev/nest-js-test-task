@@ -5,10 +5,11 @@ this is a service that collects data from [cryptocompare.com](cryptocompare.com)
 
 ## Installation
 Before You started ensure that You have `.env` file in root folder with these configurations:  
-`MONGODB_URL=https://XXX`    
+`MONGODB_URI=https://XXX`    
 `MONGODB_DBNAME=data-base-name`    
-`MONGODB_USERNAME=Your-usename`    
+`MONGODB_USER=Your-usename`    
 `MONGODB_PASSWORD=Your-password`    
+`CRYPTOCOMPARE_API_KEY=xxxxx1111xxxxx`    
 
 
 Don't forget run 
