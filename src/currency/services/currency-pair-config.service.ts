@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { CURRENCY_PAIRS } from '../../common/constants/currency-pairs';
 import { ICurrencyPair } from '../../common/interfaces';
 import { OnEvent } from '@nestjs/event-emitter';
 import { CurrencyCode } from '../../common/enums/currency-code.enum';
 import { ICurrencyPairSyms } from '../../cryptocompare/cryptocompare.service';
+import { AppConfig } from '../../../configs/app.config';
 
 @Injectable()
 export class CurrencyPairConfigService {
@@ -37,13 +37,10 @@ export class CurrencyPairConfigService {
   }
 
   private updateAvailableCurrencyPairs(): void {
-    const pairs = new Set<ICurrencyPair>();
+    const pairs = new Set<ICurrencyPair>(this.getConfiguredCurrencyPairs());
     const fsyms = new Set<CurrencyCode>();
     const tsyms = new Set<CurrencyCode>();
 
-    this.getConfiguredCurrencyPairs().forEach((pair) => {
-      this.getToWaysCurrencyPair(pair).forEach((p) => pairs.add(p));
-    });
     pairs.forEach((pair) => {
       const pairArr = pair.split('-');
       fsyms.add(pairArr[0] as CurrencyCode);
@@ -58,14 +55,39 @@ export class CurrencyPairConfigService {
   }
 
   private getConfiguredCurrencyPairs(): ICurrencyPair[] {
-    return CURRENCY_PAIRS;
+    const currencyPairs: ICurrencyPair[] = [];
+
+    AppConfig.currencyPairs.forEach((pairConfig) => {
+      currencyPairs.push(
+        ...this.unwindCurrencySymsToPaisString(
+          pairConfig.fsyms,
+          pairConfig.tsyms,
+        ),
+      );
+
+      if (pairConfig.canBeMirrored) {
+        currencyPairs.push(
+          ...this.unwindCurrencySymsToPaisString(
+            pairConfig.tsyms,
+            pairConfig.fsyms,
+          ),
+        );
+      }
+    });
+
+    return currencyPairs;
   }
 
-  private getToWaysCurrencyPair(
-    currencyPair: ICurrencyPair,
-  ): [ICurrencyPair, ICurrencyPair] {
-    const [currency1, currency2] = currencyPair.split('-');
-
-    return [currencyPair, `${currency2}-${currency1}`];
+  private unwindCurrencySymsToPaisString(
+    fsyms: CurrencyCode[],
+    tsyms: CurrencyCode[],
+  ): ICurrencyPair[] {
+    const currencyPairs: ICurrencyPair[] = [];
+    for (const fsym of fsyms) {
+      for (const tsym of tsyms) {
+        currencyPairs.push(`${fsym}-${tsym}`);
+      }
+    }
+    return currencyPairs;
   }
 }
