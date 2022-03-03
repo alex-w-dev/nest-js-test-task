@@ -4,22 +4,40 @@ services:
   dev:
     container_name: nestjs_api_dev
     image: test-task-dev:1.0.0
+    environment:
+      - MONGODB_URI_P1=mongodb://mongodb:27017
     build:
       context: .
       target: development
       dockerfile: ./Dockerfile
-    command: npm run start:debug
+    command: npm run start:dev
     ports:
       - 3000:3000
     networks:
       - test-task-network
+    depends_on:
+      - mongodb
     volumes:
       - .:/usr/src/app
-      - ./node_modules:/usr/src/app/node_modules
+      - /usr/src/app/node_modules
     restart: unless-stopped
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    volumes:
+      - ./database:/data/db
+    ports:
+      - 27017:27017
+    networks:
+      - test-task-network
+    restart: always
+
   prod:
     container_name: nestjs_api_prod
     image: test-task-prod:1.0.0
+    environment:
+      - MONGODB_URI_P1=mongodb://mongodb:27017
     build:
       context: .
       target: production
@@ -29,10 +47,13 @@ services:
       - 3000:3000
     networks:
       - test-task-network
+    depends_on:
+      - mongodb
     volumes:
       - .:/usr/src/app
-      - ./node_modules:/usr/src/app/node_modules
+      - /usr/src/app/node_modules
     restart: unless-stopped
 
 networks:
   test-task-network:
+    driver: bridge

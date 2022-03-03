@@ -16,12 +16,14 @@ import { AppGateway } from './app.gateway';
     ScheduleModule.forRoot(),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        uri: configService.get<string>('MONGODB_URI'),
-        dbName: configService.get<string>('MONGODB_DBNAME'),
-        user: configService.get<string>('MONGODB_USER'),
-        pass: configService.get<string>('MONGODB_PASSWORD'),
-      }),
+      useFactory: async (configService: ConfigService) => {
+        return {
+          uri: configService.get<string>('MONGODB_URI_P1') || configService.get<string>('MONGODB_URI'),
+          dbName: configService.get<string>('MONGODB_DBNAME'),
+          user: configService.get<string>('MONGODB_USER'),
+          pass: configService.get<string>('MONGODB_PASSWORD'),
+        }
+      },
       inject: [ConfigService],
     }),
     EventEmitterModule.forRoot(),
