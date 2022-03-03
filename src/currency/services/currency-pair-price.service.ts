@@ -18,9 +18,7 @@ export class CurrencyPairPriceService {
     @InjectModel(CurrencyPairPriceDto.name)
     private currencyPairPriceModel: ICurrencyPairPriceModel,
     private cryptocompareService: CryptocompareService,
-  ) {
-    setTimeout(() => this.updateAllAccordingCryptocompare(), 1000);
-  }
+  ) {}
 
   async updateAllAccordingCryptocompare() {
     const currencyPairsAsSyms =
