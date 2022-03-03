@@ -6,10 +6,12 @@ import { CRYPTOCOMPARE_BASE_URL } from '../common/constants/cryptocompare-base-u
 import { CryptocomparePriceDisplayDto } from './dto/cryptocompare-price-display.dto';
 import { CryptocomparePriceRawDto } from './dto/cryptocompare-price-raw.dto';
 
-type ILimitedCurrencyPairs = Array<{
+export type ICurrencyPairSyms = {
   fsyms: CurrencyCode[];
   tsyms: CurrencyCode[];
-}>;
+};
+
+type ILimitedCurrencyPairs = Array<ICurrencyPairSyms>;
 
 export type ICryptocomparePriceMultiFullResponse = {
   RAW: {

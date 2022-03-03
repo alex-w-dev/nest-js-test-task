@@ -1,23 +1,22 @@
 import { BadRequestException, Controller, Get, Query } from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { CurrencyService } from './currency.service';
-import { CurrencyPriceResponseDto } from './dto/currency-price-response.dto';
+import { CurrencyPairPriceService } from './services/currency-pair-price.service';
 import { ICurrencyPair } from '../common/interfaces';
 import { CurrencyAvailablePairsResponseDto } from './dto/currency-available-pairs-response.dto';
 import { CurrencyCode } from '../common/enums/currency-code.enum';
-import { CurrencyPairPriceDto } from './dto/currency-pair-price.dto';
-import { CryptocomparePriceDisplayDto } from '../cryptocompare/dto/cryptocompare-price-display.dto';
 import {
   CryptocompareService,
   ICryptocomparePriceMultiFullResponse,
 } from '../cryptocompare/cryptocompare.service';
+import { CurrencyPairConfigService } from './services/currency-pair-config.service';
 
 @ApiTags('currency')
 @Controller('currency')
 export class CurrencyController {
   constructor(
-    private currencyService: CurrencyService,
+    private currencyPairPriceService: CurrencyPairPriceService,
     private cryptocompareService: CryptocompareService,
+    private currencyPairConfigService: CurrencyPairConfigService,
   ) {}
 
   @Get('available-pairs')
@@ -28,7 +27,8 @@ export class CurrencyController {
   })
   currencyPairs(): CurrencyAvailablePairsResponseDto {
     return {
-      currencyPairs: this.currencyService.getAllAvailableCurrencyPairs(),
+      currencyPairs:
+        this.currencyPairConfigService.getAllAvailableCurrencyPairs(),
     };
   }
 
@@ -70,7 +70,10 @@ export class CurrencyController {
       console.error(e);
     }
 
-    return this.currencyService.getPricesMultiFull(fsyms, tsyms);
+    return this.currencyPairPriceService.getCryptocomparePricesMultiFull(
+      fsyms,
+      tsyms,
+    );
   }
 
   private validateCurrencyPairs(fsyms: CurrencyCode[], tsyms: CurrencyCode[]) {
@@ -78,7 +81,7 @@ export class CurrencyController {
     for (const fsym of fsyms) {
       for (const tsym of tsyms) {
         const pair = `${fsym}-${tsym}` as ICurrencyPair;
-        if (!this.currencyService.isCurrencyPairAvailable(pair)) {
+        if (!this.currencyPairConfigService.isCurrencyPairAvailable(pair)) {
           notAvailablePairs.push(pair);
         }
       }
