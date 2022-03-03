@@ -1,16 +1,18 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { CryptocompareModule } from './cryptocompare/cryptocompare.module';
-import { EventEmitterModule } from '@nestjs/event-emitter';
-import { CurrencyModule } from './currency/currency.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ScheduleModule } from '@nestjs/schedule';
+import { EventEmitterModule } from '@nestjs/event-emitter';
+import { AppController } from './app.controller';
+import { CryptocompareModule } from './cryptocompare/cryptocompare.module';
+import { CurrencyModule } from './currency/currency.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    ScheduleModule.forRoot(),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
