@@ -10,14 +10,37 @@ import { ICurrencyPairPriceModel } from '../../common/chemas/currency-pair-price
 import { FilterQuery } from 'mongoose';
 import { set } from 'lodash';
 import { CurrencyPairConfigService } from './currency-pair-config.service';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
 export class CurrencyPairPriceService {
+  static convertCurrencyPairPricesToCryptocomareResponce(
+    currencyPairPrices: CurrencyPairPriceDto[],
+  ): ICryptocomparePriceMultiFullResponse {
+    const pricesMultiFull: ICryptocomparePriceMultiFullResponse = {
+      RAW: {},
+
+      DISPLAY: {},
+    };
+
+    currencyPairPrices.forEach((price) => {
+      set(pricesMultiFull.RAW, `${price.fsym}.${price.tsym}`, price.raw);
+      set(
+        pricesMultiFull.DISPLAY,
+        `${price.fsym}.${price.tsym}`,
+        price.display,
+      );
+    });
+
+    return pricesMultiFull;
+  }
+
   constructor(
     private currencyPairConfigService: CurrencyPairConfigService,
     @InjectModel(CurrencyPairPriceDto.name)
     private currencyPairPriceModel: ICurrencyPairPriceModel,
     private cryptocompareService: CryptocompareService,
+    private eventEmitter: EventEmitter2,
   ) {}
 
   async updateAllAccordingCryptocompare() {
@@ -53,13 +76,8 @@ export class CurrencyPairPriceService {
     fsyms: CurrencyCode[],
     tsyms: CurrencyCode[],
   ): Promise<ICryptocomparePriceMultiFullResponse> {
-    const pricesMultiFull: ICryptocomparePriceMultiFullResponse = {
-      RAW: {},
-      DISPLAY: {},
-    };
-
     if (!fsyms.length || !tsyms.length) {
-      return pricesMultiFull;
+      return null;
     }
 
     const $or: FilterQuery<CurrencyPairPriceDto>['$or'] = [];
@@ -73,16 +91,9 @@ export class CurrencyPairPriceService {
     }
     const currencyPairPrices = await this.currencyPairPriceModel.find({ $or });
 
-    currencyPairPrices.forEach((price) => {
-      set(pricesMultiFull.RAW, `${price.fsym}.${price.tsym}`, price.raw);
-      set(
-        pricesMultiFull.DISPLAY,
-        `${price.fsym}.${price.tsym}`,
-        price.display,
-      );
-    });
-
-    return pricesMultiFull;
+    return CurrencyPairPriceService.convertCurrencyPairPricesToCryptocomareResponce(
+      currencyPairPrices,
+    );
   }
 
   async upsertCurrencyPriceData(
@@ -103,5 +114,6 @@ export class CurrencyPairPriceService {
         upsert: true,
       },
     );
+    this.eventEmitter.emit('currency-pair.update', currencyPairPrice);
   }
 }

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" lang="en" />
+  <link rel="stylesheet" href="/css/index.css">
+  <title>This is completed test task</title>
+  <script src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<h1>Websocket playground</h1>
+<p>
+  You can subscribe to some currency pairs, use next example: <b>RUB-USD,USD-BTC</b>
+</p>
+
+<p>
+  <input type="text" id="pairs">
+  <input type="button" value="(re)Subscribe" id="resubscribe">
+  <input type="button" value="Unsubscribe All" id="unsubscribe">
+  <input type="button" value="Clear Log" id="clearLog">
+</p>
+<hr>
+<textarea id="textarea" style="width: 100%; min-height: 400px"></textarea>
+<script>
+  (() => {
+    const resubscribe = document.getElementById('resubscribe')
+    const unsubscribe = document.getElementById('unsubscribe')
+    const clearLog = document.getElementById('clearLog')
+    const pairs = document.getElementById('pairs')
+    const textarea = document.getElementById('textarea')
+    const socket = io('http://localhost:3000')
+
+    socket.on('message', (message) => {
+      textarea.value = message + '\r\n' + textarea.value ;
+    })
+
+    resubscribe.onclick = () => {
+      socket.emit('currency-pair.subscribe', JSON.stringify(pairs.value.split(',')))
+    }
+
+    unsubscribe.onclick = () => {
+      socket.emit('currency-pair.unsubscribe')
+    }
+
+    clearLog.onclick = () => {
+      textarea.value = '';
+    }
+  })()
+</script>
+</body>
+</html>

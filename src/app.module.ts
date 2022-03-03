@@ -6,6 +6,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { CryptocompareModule } from './cryptocompare/cryptocompare.module';
 import { CurrencyModule } from './currency/currency.module';
 import { AppController } from './app.controller';
+import { AppGateway } from './app.gateway';
 
 @Module({
   imports: [
@@ -28,5 +29,6 @@ import { AppController } from './app.controller';
     CurrencyModule,
   ],
   controllers: [AppController],
+  providers: [AppGateway],
 })
 export class AppModule {}

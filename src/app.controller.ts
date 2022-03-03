@@ -9,4 +9,10 @@ export class AppController {
   index(): void {
     // this endpoint renders static page
   }
+  @Get('websocket')
+  @Render('websocket')
+  @ApiExcludeEndpoint()
+  websocket(): void {
+    // this endpoint renders static page
+  }
 }

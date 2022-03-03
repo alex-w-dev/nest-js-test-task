@@ -21,5 +21,6 @@ import { CurrencyPairSchedulerService } from './services/currency-pair-scheduler
     CurrencyPairConfigService,
     CurrencyPairSchedulerService,
   ],
+  exports: [CurrencyPairConfigService],
 })
 export class CurrencyModule {}

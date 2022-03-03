@@ -31,6 +31,10 @@ export class CurrencyPairConfigService {
     );
   }
 
+  isAllCurrencyPairsAvailable(currencyPairs: ICurrencyPair[]): boolean {
+    return !currencyPairs.some((pair) => !this.isCurrencyPairAvailable(pair));
+  }
+
   @OnEvent('currency-pairs.updated')
   private handleCurrencyPairUpdate(): void {
     this.updateAvailableCurrencyPairs();
