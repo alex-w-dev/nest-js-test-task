@@ -11,7 +11,11 @@ import { CurrencyPairSchedulerService } from './services/currency-pair-scheduler
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: CurrencyPairPriceDto.name, schema: CurrencyPairPriceSchema },
+      {
+        name: CurrencyPairPriceDto.name,
+        schema: CurrencyPairPriceSchema,
+        collection: 'currency-pair-prices',
+      },
     ]),
     CryptocompareModule,
   ],
