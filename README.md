@@ -3,7 +3,7 @@
 
 this is a service that collects data from [cryptocompare.com](cryptocompare.com) using its API and stores it in a MongoDB  
 
-your app locally is on [3000 port](http://localhost:3000/).
+your app locally is on [3000 port](http://localhost:3000/), also description of task is there.
 
 #### API
 api endpoint descriptions are in [http://localhost:3000/api](http://localhost:3000/api)
@@ -57,13 +57,13 @@ $ docker-compose up --build dev
 $ docker-compose up --build prod
 ```
 
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-```
+[//]: # (## Test)
+[//]: # ()
+[//]: # (```bash)
+[//]: # (# unit tests)
+[//]: # ($ npm run test)
+[//]: # ()
+[//]: # (# e2e tests)
+[//]: # ($ npm run test:e2e)
+[//]: # (```)
 
