@@ -21,6 +21,7 @@ socket.on('message', (message) => {
 ## Installation
 Before You started ensure that You have `.env` file in root folder with these configurations:  
 ```shell
+PORT=3000
 MONGODB_URI=https://XXX
 MONGODB_DBNAME=data-base-name
 MONGODB_USER=your-usename
